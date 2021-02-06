@@ -1,0 +1,8 @@
+{
+  "name": "My_Blog",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/leewonje418/My_Blog.git",
+  "author": "이원제 <50200484+leewonje418@users.noreply.github.com>",
+  "license": "MIT"
+}
