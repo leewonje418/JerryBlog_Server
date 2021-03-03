@@ -5,43 +5,45 @@ const UserSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
-    },
-    email: {
+      },
+      email: {
         type: String,
         required: true,
-    },
-    password: {
+        unique: true,
+      },
+      password: {
         type: String,
         required: true,
-    },
-    role: {
+      },
+      role: {
         type: String,
-        required: true,
-    },
-    register_date: {
+        enum: ['MainHost', 'SubHost', 'User'],
+        default: 'User',
+      },
+      register_date: {
         type: Date,
-        default: moment().format("YYYY-MM-DD hh:mm:ss"),
-    },
-    comments: [
+        default: moment().format('YYYY-MM-DD hh:mm:ss'),
+      },
+      comments: [
         {
-            post_id: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "post",
-            },
-            comment_id: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "comment", 
-            },
-        }
-    ],
-    posts: [
-        {
+          post_id: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "post",
+            ref: 'posts',
+          },
+          comment_id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'comments',
+          },
         },
-    ],
+      ],
+      posts: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'posts',
+        },
+      ],
 });
 
-const User = mongoose.model("user", UserSchema);
+const User = mongoose.model('user', UserSchema);
 
 export default User;

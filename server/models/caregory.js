@@ -1,19 +1,19 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 // Create Schema
 const CategorySchema = new mongoose.Schema({
   categoryName: {
     type: String,
-    default: "미분류",
+    default: '미분류',
   },
   posts: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "post",
+      ref: 'post',
     },
   ],
 });
 
-const Category = mongoose.model("category", CategorySchema);
+const Category = mongoose.model('category', CategorySchema);
 
 export default Category;

@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import moment from "moment";
+import mongoose from 'mongoose';
+import moment from 'moment';
 
 const CommentSchema = new mongoose.Schema({
   contents: {
@@ -8,19 +8,19 @@ const CommentSchema = new mongoose.Schema({
   },
   date: {
     type: String,
-    default: moment().format("YYYY-MM-DD hh:mm:ss"),
+    default: moment().format('YYYY-MM-DD hh:mm:ss'),
   },
   post: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "post",
+    ref: 'post',
   },
   creator: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "user",
+    ref: 'user',
   },
   creatorName: { type: String },
 });
 
-const Comment = mongoose.model("comment", CommentSchema);
+const Comment = mongoose.model('comment', CommentSchema);
 
 export default Comment;
