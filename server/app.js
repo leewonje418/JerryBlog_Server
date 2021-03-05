@@ -10,6 +10,8 @@ const { MONGO_URI } = config;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
+app.use(hpp());
+app.use(helmet());
 app.use(express.json());
 
 mongoose
