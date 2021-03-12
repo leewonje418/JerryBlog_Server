@@ -7,7 +7,8 @@ import hpp from 'hpp';
 import helmet from 'helmet';
 
 import postRoutes from './routes/api/post';
-import userRoutes from "./routes/api/user";
+import userRoutes from './routes/api/user';
+import authRoutes from './routes/api/auth';
 
 const app = express();
 const { MONGO_URI } = config;
@@ -29,6 +30,7 @@ mongoose
     .catch((e) => console.log(e));
 app.get('/');
 app.use('/api/post', postRoutes);
-app.use("/api/user", userRoutes);
+app.use('/api/user', userRoutes);
+app.use('/api/auth', authRoutes);
 
 export default app;
