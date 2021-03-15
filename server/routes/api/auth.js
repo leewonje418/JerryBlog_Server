@@ -10,9 +10,6 @@ import User from "../../models/user";
 
 const router = express.Router();
 
-// @route    POST  api/auth
-// @desc     Auth  user
-// @access   Public
 router.post("/", (req, res) => {
   const { email, password } = req.body;
 
@@ -43,11 +40,10 @@ router.post("/", (req, res) => {
               role: user.role,
             },
           });
-        }
-      );
+        });
+      });
     });
   });
-});
 
 router.post("/logout", (req, res) => {
   res.json("로그아웃 성공");
