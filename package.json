@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon ./server/server.js --exec babel-node"
+    "start": "nodemon ./src/server.ts"
   },
   "repository": "https://github.com/leewonje418/My_Blog.git",
   "author": "이원제 <50200484+leewonje418@users.noreply.github.com>",
