@@ -1,4 +1,46 @@
 import { Request, Response } from 'express';
+import httpError from '../error/httpError';
+import LoginRequest from '../request/login.request';
+import AuthService from '../service/auth.service';
 
 export default class AuthController {
+    private readonly authService: AuthService;
+
+    constructor() {
+        this.authService = new AuthService();
+    }
+
+    login = async (req: Request, res:Response) => {
+        try {
+            const loginRequest = new LoginRequest(req.body);
+            await loginRequest.validate();
+
+            const token = await this.authService.login(loginRequest);
+
+            res.status(200).json({
+                message: '로그인 성공',
+                data: {
+                  'x-access-token': token,
+                },
+            });
+        } catch (err) {
+            throw new httpError(500, '로그인 에러');
+        }
+    }
+
+    logout = async (res: Response) => {
+        res.status(200).json({
+            message: '로그아웃 성공'
+        })
+    }
+
+    //용도에띠라 이름을 변경할 수 있음 자료형도 바뀔수 있음 
+    user = async (req: any, res: Response) => {
+        try {
+            const user = await this.authService.user(req.user.id);
+            res.status(200).json(user);
+        } catch (error) {
+            throw new httpError(500, '조회 에러');
+        }
+    }
 }
