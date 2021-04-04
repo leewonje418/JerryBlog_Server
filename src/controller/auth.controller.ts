@@ -1,5 +1,8 @@
 import { Request, Response } from 'express';
-import httpError from '../error/httpError';
+
+import SuccessHandler from '../lib/handler/httpSuccessHandler';
+import ErrorHandler from '../lib/handler/httpErrorHandler';
+
 import LoginRequest from '../request/login.request';
 import AuthService from '../service/auth.service';
 
@@ -10,6 +13,7 @@ export default class AuthController {
         this.authService = new AuthService();
     }
 
+    // 로그인 헨들러 구현해야됨
     login = async (req: Request, res:Response) => {
         try {
             const loginRequest = new LoginRequest(req.body);
@@ -24,7 +28,7 @@ export default class AuthController {
                 },
             });
         } catch (err) {
-            throw new httpError(500, '로그인 에러');
+            ErrorHandler(res, err);
         }
     }
 
@@ -39,8 +43,8 @@ export default class AuthController {
         try {
             const user = await this.authService.user(req.user.id);
             res.status(200).json(user);
-        } catch (error) {
-            throw new httpError(500, '조회 에러');
+        } catch (err) {
+            ErrorHandler(res, err);
         }
     }
 }
