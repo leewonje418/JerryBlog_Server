@@ -5,7 +5,7 @@ import HttpError from '../error/httpError';
 import SignUpRequest from '../request/signup.request';
 
 export default class UserService {
-    findAll = async (): Promise<Document<any>[]> => {
+    getUsers = async (): Promise<Document<any>[]> => {
         const users = await User.find();
         return users;
     }
