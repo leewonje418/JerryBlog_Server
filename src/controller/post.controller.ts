@@ -14,13 +14,13 @@ export default class PostController {
     }
 
     getPosts = async(req: Request, res: Response) => {
-        const posts: Document<any>[] = await this.postService.get();
+        const posts: Document<any>[] = await this.postService.getPosts();
         res.status(200).json({
             posts
         })
     }
 
-    createPost = async(req: Request, res: Response) => {
+    create = async(req: Request, res: Response) => {
         const postRequest = new PostRequest(req.body);
 
         await postRequest.validate();
@@ -37,5 +37,4 @@ export default class PostController {
             throw new httpError(500, '게시글등록 서버 오류');
         }
     }
-
 }
