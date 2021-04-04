@@ -1,6 +1,9 @@
 import { Request, Response } from 'express';
 import { Document } from 'mongoose';
-import httpError from '../error/httpError';
+
+import SuccessHandler from '../lib/handler/httpSuccessHandler';
+import ErrorHandler from '../lib/handler/httpErrorHandler';
+
 import SignUpRequest from '../request/signup.request';
 import UserService from '../service/user.service';
 
@@ -25,15 +28,12 @@ export default class UserController {
 
         try {
             const newUser = this.userService.signUp(signupRequest);
-            if (newUser === undefined) {
-                throw new httpError(500, '게시글등록 서버 오류');
-            }
             res.status(200).json({
                 message: '회원가입 성공',
                 data : newUser
             })
-        } catch (error) {
-            throw new httpError(500, '게시글등록 서버 오류');
+        } catch (err) {
+            ErrorHandler(res, err);
         }
     }
 }
