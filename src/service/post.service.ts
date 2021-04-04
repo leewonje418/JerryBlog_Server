@@ -5,7 +5,7 @@ import HttpError from '../error/httpError';
 import PostRequest from '../request/post.request';
 
 export default class PostService {
-    get = async (): Promise<Document<any>[]> => {
+    getPosts = async (): Promise<Document<any>[]> => {
         const posts = await Post.find();
         return posts;
     }
