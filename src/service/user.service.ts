@@ -1,6 +1,6 @@
-import mongoose, { Document } from 'mongoose';
+import { Document } from 'mongoose';
 
-import User from '../database/post';
+import User from '../database/user';
 import HttpError from '../error/httpError';
 import SignUpDTO from '../dto/signup.dto';
 import Bcrypt from '../lib/bcrypt/bcrypt';
@@ -12,13 +12,19 @@ export default class UserService {
     }
 
     signUp = async (signUpRequest : SignUpDTO): Promise<Document<any>> => {
-        let { name, email, password } = signUpRequest;
+        const { name, email } = signUpRequest;
+        let { password } = signUpRequest;
 
         const bcrypt = new Bcrypt();
         password = bcrypt.hashPassword(password);
 
+        const checkprofile = await User.findOne({ email });
+        if(checkprofile) {
+            throw new HttpError(400, '이메일 중복');
+        }
+
         try {
-            const newUser = await User.create({
+            let newUser = await User.create({
                 name, email, password
             });
             return newUser;
