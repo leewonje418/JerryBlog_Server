@@ -1,7 +1,7 @@
 import { Request, response, Response } from 'express';
 import { Document } from 'mongoose';
 
-import SuccessHandler from '../lib/handler/httpSuccessHandler';
+import { successHandler } from '../lib/handler/httpSuccessHandler';
 import ErrorHandler from '../lib/handler/httpErrorHandler';
 
 import PostDTO from '../dto/post.dto';
@@ -17,7 +17,7 @@ export default class PostController {
     getPosts = async(req: Request, res: Response) => {
         try {
             const posts: Document<any>[] = await this.postService.getPosts();
-            SuccessHandler(response, 200, '게시글 전채 불러오기 성공', posts);
+            successHandler(res, 200, '게시글 전채 불러오기 성공', posts);
         } catch (err) {
             ErrorHandler(res, err);
         }
@@ -29,7 +29,7 @@ export default class PostController {
 
         try {
             const post = this.postService.create(postRequest);
-            SuccessHandler(response, 200, '게시글 게시 성공', post);
+            successHandler(res, 200, '게시글 게시 성공', post);
         } catch (err) {
             ErrorHandler(res, err);
         }
