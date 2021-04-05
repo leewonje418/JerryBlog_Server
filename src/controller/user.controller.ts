@@ -1,10 +1,10 @@
-import { Request, Response } from 'express';
+import { Request, response, Response } from 'express';
 import { Document } from 'mongoose';
 
 import SuccessHandler from '../lib/handler/httpSuccessHandler';
 import ErrorHandler from '../lib/handler/httpErrorHandler';
 
-import SignUpRequest from '../request/signup.request';
+import SignUpDTO from '../dto/signup.dto';
 import UserService from '../service/user.service';
 
 export default class UserController {
@@ -16,22 +16,16 @@ export default class UserController {
 
     getUsers = async(req: Request, res: Response) => {
         const users: Document<any>[] = await this.userService.getUsers();
-        res.status(200).json({
-            users
-        })
+        SuccessHandler(response, 200, '유저 전채 불러오기 성공', users);
     }
 
     signUp = async(req: Request, res: Response) => {
-        const signupRequest = new SignUpRequest(req.body);
-
+        const signupRequest = new SignUpDTO(req.body);
         await signupRequest.validate();
 
         try {
             const newUser = this.userService.signUp(signupRequest);
-            res.status(200).json({
-                message: '회원가입 성공',
-                data : newUser
-            })
+            SuccessHandler(response, 200, '회원가입 성공', newUser);
         } catch (err) {
             ErrorHandler(res, err);
         }
