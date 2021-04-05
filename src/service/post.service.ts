@@ -2,7 +2,7 @@ import mongoose, { Document } from 'mongoose';
 
 import Post from '../database/post';
 import HttpError from '../error/httpError';
-import PostRequest from '../request/post.request';
+import PostDTO from '../dto/post.dto';
 
 export default class PostService {
     getPosts = async (): Promise<Document<any>[]> => {
@@ -10,7 +10,7 @@ export default class PostService {
         return posts;
     }
 
-    create = async (postRequest: PostRequest): Promise<Document<any>> => {
+    create = async (postRequest: PostDTO): Promise<Document<any>> => {
         const { title, content, fileUrl, creator } = postRequest;
         try {
             const newPost = await Post.create({
