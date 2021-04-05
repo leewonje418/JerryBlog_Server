@@ -1,10 +1,17 @@
 import { Response } from 'express';
 
-export default (res: Response, status: number, message: string, data?: any) => {
-	res.status(status).json({
+export const successHandler = (res: Response, status: number, message: string, data?: any) => {
+	return res.status(status).json({
 		message: message,
-		data: data && data
+		data: data
 	});
+};
 
-    return;
+export const loginSuccessHandler = (res: Response, status: number, message: string, token: string) => {
+	return res.status(status).json({
+		message: message,
+		data: {
+            'x-access-token' : token
+        }
+	});
 };
