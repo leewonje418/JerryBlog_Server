@@ -8,7 +8,7 @@ export default class SignUpRequest {
   @Length(2, 100)
   readonly email: string;
 
-  @Length(2, 20)
+  @Length(2, 100)
   readonly password: string;
   
   constructor(body: SignUpRequest) {
