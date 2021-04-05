@@ -5,16 +5,16 @@ import Bcrypt from '../lib/bcrypt/bcrypt'
 import User from '../database/user';
 import HttpError from '../error/httpError';
 import { createToken } from '../lib/token'
-import LoginRequest from '../request/login.request'
+import LoginDTO from '../dto/login.dto'
 
 export default class AuthService {
-    login = async (loginRequest: LoginRequest): Promise<string> => {
-        const { email, password } = loginRequest;
+    login = async (loginRequest: LoginDTO): Promise<string> => {
+        let { email, password } = loginRequest;
 
         const bcrypt = new Bcrypt();
-        const hashPassword = bcrypt.hashPassword(password);
+        password = bcrypt.hashPassword(password);
         
-        User.findOne({email, hashPassword}).then(async (user) => {
+        User.findOne({email, password}).then(async (user) => {
             if(user === undefined) {
                 throw new HttpError(401, '인증 실패');
             }
