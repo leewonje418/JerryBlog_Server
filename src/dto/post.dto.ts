@@ -8,7 +8,7 @@ export default class PostRequest {
   @Length(1, 500)
   readonly content: string;
 
-  readonly fileUrl: string;
+  readonly fileUrl?: string;
 
   readonly creator: string;
 
