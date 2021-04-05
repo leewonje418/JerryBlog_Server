@@ -2,7 +2,8 @@ import mongoose, { Document } from 'mongoose';
 
 import User from '../database/post';
 import HttpError from '../error/httpError';
-import SignUpRequest from '../request/signup.request';
+import SignUpDTO from '../dto/signup.dto';
+import Bcrypt from '../lib/bcrypt/bcrypt';
 
 export default class UserService {
     getUsers = async (): Promise<Document<any>[]> => {
@@ -10,8 +11,12 @@ export default class UserService {
         return users;
     }
 
-    signUp = async (signuprequest : SignUpRequest): Promise<Document<any>> => {
-        const { name, email, password } = signuprequest;
+    signUp = async (signUpRequest : SignUpDTO): Promise<Document<any>> => {
+        let { name, email, password } = signUpRequest;
+
+        const bcrypt = new Bcrypt();
+        password = bcrypt.hashPassword(password);
+
         try {
             const newUser = await User.create({
                 name, email, password
