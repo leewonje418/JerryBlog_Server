@@ -1,7 +1,6 @@
-import mongoose, { Document } from 'mongoose';
+import { Document } from 'mongoose';
 
 import Post from '../database/post';
-import HttpError from '../error/httpError';
 import PostDTO from '../dto/post.dto';
 
 export default class PostService {
@@ -12,13 +11,9 @@ export default class PostService {
 
     create = async (postRequest: PostDTO): Promise<Document<any>> => {
         const { title, content, fileUrl, creator } = postRequest;
-        try {
-            const newPost = await Post.create({
-                title, content, fileUrl, creator
-            });
-            return newPost;
-        } catch (error) {
-            throw new HttpError(500, '게시글 등록 오류');
-        }
+        const newPost = await Post.create({
+            title, content, fileUrl, creator
+        });
+        return newPost;
     }
 }
