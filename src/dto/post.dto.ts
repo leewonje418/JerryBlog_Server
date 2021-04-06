@@ -1,7 +1,7 @@
 import { Length, validate } from 'class-validator';
 import HttpError from '../error/httpError';
 
-export default class PostRequest {
+export default class PostDTO {
   @Length(1, 50)
   readonly title: string;
 
@@ -12,7 +12,7 @@ export default class PostRequest {
 
   readonly creator: string;
 
-  constructor(body: PostRequest) {
+  constructor(body: PostDTO) {
     this.title = body.title;
     this.content = body.content;
     this.fileUrl = body.fileUrl;

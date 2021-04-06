@@ -1,7 +1,7 @@
 import { Length, validate } from 'class-validator';
 import HttpError from '../error/httpError';
 
-export default class SignUpRequest {
+export default class SignUpDTO {
   @Length(2, 100)
   readonly name: string;
 
@@ -9,12 +9,12 @@ export default class SignUpRequest {
   readonly email: string;
 
   @Length(2, 100)
-  readonly password: string;
+  readonly pw: string;
   
-  constructor(body: SignUpRequest) {
+  constructor(body: SignUpDTO) {
     this.name = body.name;
     this.email = body.email;
-    this.password = body.password;
+    this.pw = body.pw;
   }
   
   async validate(): Promise<void> {

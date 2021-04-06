@@ -1,14 +1,14 @@
 import { Length, validate } from 'class-validator';
 import HttpError from '../error/httpError';
 
-export default class LoginRequest {
+export default class LoginDTO {
   @Length(2, 100)
   readonly email: string;
-  readonly password: string;
+  readonly pw: string;
 
-  constructor(body: LoginRequest) {
+  constructor(body: LoginDTO) {
     this.email = body.email;
-    this.password = body.password;
+    this.pw = body.pw;
   }
 
   async validate(): Promise<void> {
