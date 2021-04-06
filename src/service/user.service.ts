@@ -4,6 +4,7 @@ import User from '../database/user';
 import HttpError from '../error/httpError';
 import SignUpDTO from '../dto/signup.dto';
 import Bcrypt from '../lib/bcrypt/bcrypt';
+import { checkRegularExpession } from '../lib/checkRegularExpession';
 
 export default class UserService {
     getUsers = async (): Promise<Document<any>[]> => {
@@ -12,24 +13,21 @@ export default class UserService {
     }
 
     signUp = async (signUpRequest : SignUpDTO): Promise<Document<any>> => {
-        const { name, email } = signUpRequest;
-        let { password } = signUpRequest;
+        const { name, email, pw } = signUpRequest;
 
+        checkRegularExpession(email, pw);
+        
         const bcrypt = new Bcrypt();
-        password = bcrypt.hashPassword(password);
+        const password = bcrypt.hashPassword(pw);
 
         const checkprofile = await User.findOne({ email });
         if(checkprofile) {
             throw new HttpError(400, '이메일 중복');
         }
 
-        try {
-            let newUser = await User.create({
-                name, email, password
-            });
-            return newUser;
-        } catch (error) {
-            throw new HttpError(500, '회원가입 오류');
-        }
+        let newUser = await User.create({
+            name, email, password, role: 'MainHost'
+        });
+        return newUser;
     }
 }
