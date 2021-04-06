@@ -14,7 +14,7 @@ export default class PostController {
         this.postService = new PostService();
     }
 
-    getPosts = async(req: Request, res: Response) => {
+    getPosts = async(res: Response) => {
         try {
             const posts: Document<any>[] = await this.postService.getPosts();
             successHandler(res, 200, '게시글 전채 불러오기 성공', posts);
