@@ -14,9 +14,13 @@ export default class UserController {
         this.userService = new UserService();
     }
 
-    getUsers = async(req: Request, res: Response) => {
-        const users: Document<any>[] = await this.userService.getUsers();
-        successHandler(res, 200, '유저 전채 불러오기 성공', users);
+    getUsers = async(res: Response) => {
+        try {
+            const users: Document<any>[] = await this.userService.getUsers();
+            successHandler(res, 200, '유저 전채 불러오기 성공', users);
+        } catch (err) {
+            ErrorHandler(res, err);
+        }
     }
 
     signUp = async(req: Request, res: Response) => {
