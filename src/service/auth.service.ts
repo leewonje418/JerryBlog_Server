@@ -30,7 +30,7 @@ export default class AuthService {
         return user;
     }
 
-    host = async (id: number): Promise<Document<any>> => {
+    host = async (id: string): Promise<Document<any>> => {
         const user = await User.findOne({ id, role: 'MainHost' }).select('-password');
         if(user === null) {
             throw new HttpError(401, '유저가 존재하지 않습니다.');
