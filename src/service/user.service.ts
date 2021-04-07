@@ -15,8 +15,8 @@ export default class UserService {
     signUp = async (signUpRequest : SignUpDTO): Promise<Document<any>> => {
         const { name, email, pw } = signUpRequest;
 
-        checkRegularExpession(email, pw);
-        
+        await checkRegularExpession(email, pw);
+
         const bcrypt = new Bcrypt();
         const password = bcrypt.hashPassword(pw);
 
@@ -26,7 +26,7 @@ export default class UserService {
         }
 
         let newUser = await User.create({
-            name, email, password, role: 'MainHost'
+            name, email, password
         });
         return newUser;
     }
