@@ -9,10 +9,10 @@ export default class PostService {
         return posts;
     }
 
-    create = async (postRequest: PostDTO): Promise<Document<any>> => {
-        const { title, content, fileUrl, creator } = postRequest;
+    create = async (id: number, postRequest: PostDTO): Promise<Document<any>> => {
+        const { title, content, fileUrl } = postRequest;
         const newPost = await Post.create({
-            title, content, fileUrl, creator
+            title, content, fileUrl, creator: id
         });
         return newPost;
     }
