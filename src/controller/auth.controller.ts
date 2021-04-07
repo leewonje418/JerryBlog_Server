@@ -13,11 +13,11 @@ export default class AuthController {
         this.authService = new AuthService();
     }
 
-    // 로그인 헨들러 구현해야됨
     login = async (req: Request, res:Response) => {
         try {
             const loginRequest = new LoginDTO(req.body);
             await loginRequest.validate();
+
             const token = await this.authService.login(loginRequest);
             loginSuccessHandler(res, 200, '로그인 성공', token);
         } catch (err) {
@@ -25,7 +25,7 @@ export default class AuthController {
         }
     }
 
-    logout = async (res: Response) => {
+    logout = async (req: Request, res: Response) => {
         successHandler(res, 200, '로그아웃 성공');
     }
  

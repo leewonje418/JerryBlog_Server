@@ -1,4 +1,4 @@
-import { Request, response, Response } from 'express';
+import { Request, Response } from 'express';
 import { Document } from 'mongoose';
 
 import { successHandler } from '../lib/handler/httpSuccessHandler';
@@ -14,7 +14,7 @@ export default class PostController {
         this.postService = new PostService();
     }
 
-    getPosts = async(res: Response) => {
+    getPosts = async(req: Request, res: Response) => {
         try {
             const posts: Document<any>[] = await this.postService.getPosts();
             successHandler(res, 200, '게시글 전채 불러오기 성공', posts);
@@ -24,11 +24,12 @@ export default class PostController {
     }
 
     create = async(req: Request, res: Response) => {
-        const postRequest = new PostDTO(req.body);
-        await postRequest.validate();
-
         try {
-            const post = this.postService.create(postRequest);
+            const { hostId } = req;
+            const { body } = req;
+            const postRequest = new PostDTO(body);
+            await postRequest.validate();
+            const post = this.postService.create(req.hostId, postRequest);
             successHandler(res, 200, '게시글 게시 성공', post);
         } catch (err) {
             ErrorHandler(res, err);
