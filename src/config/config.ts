@@ -13,8 +13,15 @@ const getProcessEnv = (name: string): string => {
     return value;
 };
 
-// 몽고디비 주소
-export const MONGO_URI = getProcessEnv('MONGO_URI');
+// MySQL
+export const MYSQL = {
+  USERNAME: getProcessEnv('MYSQL_USERNAME'),
+  PASSWORD: getProcessEnv('MYSQL_PASSWORD'),
+  DATABASE: getProcessEnv('MYSQL_DATABASE'),
+  HOST: getProcessEnv('MYSQL_HOST'),
+  PORT: parseInt(getProcessEnv('MYSQL_PORT'), 10),
+  SYNC: getProcessEnv('MYSQL_SYNC') === 'true',
+};
 
 // jwt 시크릿 키
 export const JWT_SECRET = getProcessEnv('JWT_SECRET');
