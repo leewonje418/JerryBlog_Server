@@ -1,6 +1,6 @@
 import * as http from 'http';
 import app from './app';
-import * as database from './mongoose';
+import * as database from './orm';
 import { PORT } from './config/config';
 
 const server = http.createServer(app);
