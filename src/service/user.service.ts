@@ -1,6 +1,4 @@
-import { Document } from 'mongoose';
-
-import User from '../database/user';
+import User from '../entity/user';
 import HttpError from '../error/httpError';
 import SignUpDTO from '../dto/signup.dto';
 import Bcrypt from '../lib/bcrypt/bcrypt';
