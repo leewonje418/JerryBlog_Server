@@ -1,19 +1,24 @@
-import { Document } from 'mongoose';
-
-import Post from '../database/post';
+import Post from '../entity/post';
 import PostDTO from '../dto/post.dto';
+import PostRepository from '../repository/post.repository';
+import { getCustomRepository } from 'typeorm';
 
 export default class PostService {
-    getPosts = async (): Promise<Document<any>[]> => {
-        const posts = await Post.find();
+    getPosts = async (): Promise<Post[]> => {
+        const postRepository = getCustomRepository(PostRepository);
+        const posts = await postRepository.find();
         return posts;
     }
 
-    create = async (id: number, postRequest: PostDTO): Promise<Document<any>> => {
+    create = async (postRequest: PostDTO): Promise<Post> => {
+        const postRepository = getCustomRepository(PostRepository);
         const { title, content, fileUrl } = postRequest;
-        const newPost = await Post.create({
-            title, content, fileUrl, creator: id
-        });
-        return newPost;
+
+        const post: Post = new Post();
+		post.title = title;
+        post.content = content;
+        post.fileUrl = fileUrl;
+        
+        return postRepository.save(post);
     }
 }
