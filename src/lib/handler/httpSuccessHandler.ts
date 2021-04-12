@@ -7,7 +7,7 @@ export const successHandler = (res: Response, status: number, message: string, d
 	});
 };
 
-export const loginSuccessHandler = (res: Response, status: number, message: string, token: string) => {
+export const loginSuccessHandler = (res: Response, status: number, message: string, token: string | undefined) => {
 	return res.status(status).json({
 		message: message,
 		data: {
