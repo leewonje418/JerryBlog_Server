@@ -4,16 +4,14 @@ import AuthService from "../../service/auth.service";
 import httpErrorHandler from "../handler/httpErrorHandler";
 import { verifyToken } from "../token";
 
-export const authHost = async (req: any, res: Response, next: NextFunction) => {
-    const decoded: string = await validateToken(req, res) as string;
+export const auth = async (req: Request, res: Response, next: NextFunction) => {
+    const email: string = await validateToken(req, res) as string;
     const authService = new AuthService();
-    const host = await authService.host;
-  
+    const host = await authService.getHost(email);
     if (host === undefined) {
       throw new HttpError(403, '권한 없음');
     }
-  
-    req.user = decoded;
+    req.hostEmail = email;
     next();
 }
 
@@ -31,7 +29,7 @@ const validateToken = async (req: Request, res: Response): Promise<string | unde
   
       const decoded = await verifyToken(token);
   
-      return decoded;
+      return decoded.email;
     } catch (err) {
   
       let code;
