@@ -10,15 +10,18 @@ export default class PostService {
         return posts;
     }
 
-    create = async (postRequest: PostDTO): Promise<Post> => {
+    create = async (hostEmail: string, postRequest: PostDTO): Promise<Post> => {
         const postRepository = getCustomRepository(PostRepository);
         const { title, content, fileUrl } = postRequest;
 
         const post: Post = new Post();
+        post.userEmail = hostEmail;
 		post.title = title;
         post.content = content;
         post.fileUrl = fileUrl;
+
+        const newPost = await postRepository.save(post)
         
-        return postRepository.save(post);
+        return newPost;
     }
 }
