@@ -1,4 +1,4 @@
-import { Request, response, Response } from 'express';
+import { Request, Response } from 'express';
 
 import { successHandler , loginSuccessHandler } from '../lib/handler/httpSuccessHandler';
 import ErrorHandler from '../lib/handler/httpErrorHandler';
@@ -27,14 +27,5 @@ export default class AuthController {
 
     logout = async (req: Request, res: Response) => {
         successHandler(res, 200, '로그아웃 성공');
-    }
- 
-    user = async (req: any, res: Response) => {
-        try {
-            const user = await this.authService.user(req.user.id);
-            successHandler(res, 200, '유저 조회 성공', user);
-        } catch (err) {
-            ErrorHandler(res, err);
-        }
     }
 }

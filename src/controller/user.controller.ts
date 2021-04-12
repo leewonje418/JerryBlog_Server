@@ -1,11 +1,11 @@
-import { Request, response, Response } from 'express';
-import { Document } from 'mongoose';
+import { Request, Response } from 'express';
 
 import { successHandler } from '../lib/handler/httpSuccessHandler';
 import ErrorHandler from '../lib/handler/httpErrorHandler';
 
 import SignUpDTO from '../dto/signup.dto';
 import UserService from '../service/user.service';
+import User from '../entity/user';
 
 export default class UserController {
     private readonly userService: UserService;
@@ -16,7 +16,7 @@ export default class UserController {
 
     getUsers = async(req: Request, res: Response) => {
         try {
-            const users: Document<any>[] = await this.userService.getUsers();
+            const users: User[] = await this.userService.getUsers();
             successHandler(res, 200, '유저 전채 불러오기 성공', users);
         } catch (err) {
             ErrorHandler(res, err);
