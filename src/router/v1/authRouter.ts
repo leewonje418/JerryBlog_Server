@@ -5,7 +5,6 @@ const router: Router = Router();
 
 const authController = new AuthController();
 
-router.get('/user', authController.user);
 router.post('/login', authController.login);
 router.post('/logout', authController.logout);
 
