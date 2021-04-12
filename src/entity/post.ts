@@ -8,7 +8,7 @@ export default class Post {
     idx!: number;
 
     @RelationId((user: User) => user.email)
-    userIdx!: string;
+    userEmail!: string;
 
     @ManyToOne(type => User, { onDelete: 'CASCADE' })
     @JoinColumn({ name: 'user_id' })
@@ -39,7 +39,7 @@ export default class Post {
     @Column({
         nullable: true
     })
-    fileUrl!: string | null;
+    fileUrl?: string | undefined;
 
     @Column({
         type: 'datetime'
