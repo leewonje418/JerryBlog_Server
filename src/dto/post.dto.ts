@@ -8,14 +8,14 @@ export default class PostDTO {
   @Length(1, 500)
   readonly content: string;
 
-  readonly fileUrl?: string;
+  readonly image?: string;
 
   readonly creator: string;
 
   constructor(body: PostDTO) {
     this.title = body.title;
     this.content = body.content;
-    this.fileUrl = body.fileUrl;
+    this.image = body.image;
     this.creator = body.creator;
   }
 
