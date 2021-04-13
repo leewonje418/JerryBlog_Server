@@ -25,14 +25,13 @@ export default class PostController {
 
     create = async(req: Request, res: Response) => {
         try {
-            console.log(req);
-            const { body } = req;
+            const { body, hostEmail } = req;
 
-            const postRequest = new PostDTO(body);
+            const postRequest: PostDTO = new PostDTO(body);
             await postRequest.validate();
-
-            const post = this.postService.create('', postRequest);
-            successHandler(res, 200, '게시글 게시 성공', post);
+            await this.postService.create(hostEmail, postRequest);
+            
+            successHandler(res, 200, '게시글 게시 성공');
         } catch (err) {
             ErrorHandler(res, err);
         }
