@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import bodyParser from 'body-parser';
+import * as bodyParser from 'body-parser';
 import hpp from 'hpp';
 import helmet from 'helmet';
 import api from './router'
