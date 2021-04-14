@@ -15,10 +15,10 @@ export default class AuthController {
 
     login = async (req: Request, res:Response) => {
         try {
-            const loginRequest = new LoginDTO(req.body);
+            const loginRequest: LoginDTO = new LoginDTO(req.body);
             await loginRequest.validate();
 
-            const token = await this.authService.login(loginRequest);
+            const token: string | undefined = await this.authService.login(loginRequest);
             loginSuccessHandler(res, 200, '로그인 성공', token);
         } catch (err) {
             ErrorHandler(res, err);

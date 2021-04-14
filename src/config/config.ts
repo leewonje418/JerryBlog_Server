@@ -3,7 +3,7 @@ import logger from '../lib/logger'
 
 // 환경변수 불러오기
 const getProcessEnv = (name: string): string => {
-    const value = process.env[name];
+    const value: string | undefined = process.env[name];
     if (value === undefined) {
       const err = `${name} 환경변수가 정의되지 않았습니다`;
       logger.error(err, 'getProcessEnv');

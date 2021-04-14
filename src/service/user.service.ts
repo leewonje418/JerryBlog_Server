@@ -5,6 +5,7 @@ import Bcrypt from '../lib/bcrypt/bcrypt';
 import { checkRegularExpession } from '../lib/checkRegularExpession';
 import UserRepository from '../repository/user.repository';
 import { getCustomRepository } from 'typeorm';
+import Role from '../enum/Role';
 
 export default class UserService {
     getUsers = async (): Promise<User[]> => {
@@ -16,21 +17,23 @@ export default class UserService {
     signUp = async (signUpRequest : SignUpDTO): Promise<User> => {
         const userRepository = getCustomRepository(UserRepository);
         const { name, email, pw } = signUpRequest;
-
-        await checkRegularExpession(email, pw);
-
-        const bcrypt = new Bcrypt();
-        const password = bcrypt.hashPassword(pw);
+        const { USER } = Role;
 
         const checkprofile = await userRepository.findOne({ email });
         if(checkprofile) {
             throw new HttpError(400, '이메일 중복');
         }
 
+        await checkRegularExpession(email, pw);
+
+        const bcrypt = new Bcrypt();
+        const password = bcrypt.hashPassword(pw);
+
         const user: User = new User();
 		user.email = email;
         user.name = name;
         user.password = password;
+        user.role = USER;
 
         const newUser = await userRepository.save(user)
 

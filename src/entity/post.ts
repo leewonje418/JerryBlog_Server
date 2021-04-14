@@ -1,25 +1,25 @@
-import { Column, Entity, PrimaryColumn, RelationId, ManyToOne, JoinColumn } from 'typeorm';
+import { Column, Entity, RelationId, ManyToOne, JoinColumn, PrimaryGeneratedColumn } from 'typeorm';
 import Category from './category';
 import User from './user';
 
 @Entity('post')
 export default class Post {
-    @PrimaryColumn()
+    @PrimaryGeneratedColumn()
     idx!: number;
 
-    @RelationId((user: User) => user.email)
+    @RelationId((post: Post) => post.user)
     userEmail!: string;
 
     @ManyToOne(type => User, { onDelete: 'CASCADE' })
-    @JoinColumn({ name: 'user_id' })
+    @JoinColumn({ name: 'user_email' })
     user!: User;
 
-    @RelationId((category: Category) => category.idx)
-    categoryIdx!: string;
+    // @RelationId((post: Post) => post.category)
+    // categoryIdx!: string;
 
-    @ManyToOne(type => Category)
-    @JoinColumn({ name: 'category_id' })
-    category!: Category;
+    // @ManyToOne(type => Category)
+    // @JoinColumn({ name: 'category_id' })
+    // category!: Category;
 
     @Column({
         type: 'varchar'
@@ -30,16 +30,12 @@ export default class Post {
         type: 'varchar'
     })
     content!: string;
-
-    @Column({
-        type: 'int'
-    })
-    views!: number;
     
     @Column({
+        type: 'varchar',
         nullable: true
     })
-    fileUrl?: string | undefined;
+    image?: string | undefined;
 
     @Column({
         type: 'datetime'

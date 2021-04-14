@@ -20,4 +20,12 @@ export default class UserRepository extends Repository<User> {
             },
         });
     }
+    findUsers = async (email: string): Promise<User | undefined> => {
+        return this.findOne({
+            where: {
+                email
+            },
+            select: ['email', 'name', 'role']
+        });
+    }
 }

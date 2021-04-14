@@ -1,20 +1,20 @@
-import { Column, Entity, PrimaryColumn, RelationId, ManyToOne, JoinColumn } from 'typeorm';
+import { Column, Entity, PrimaryColumn, RelationId, ManyToOne, JoinColumn, PrimaryGeneratedColumn } from 'typeorm';
 import Post from './post';
 import User from './user';
 
 @Entity('comment')
 export default class Comment {
-    @PrimaryColumn()
+    @PrimaryGeneratedColumn()
     idx!: number;
 
-    @RelationId((user: User) => user.email)
-    userIdx!: string;
+    @RelationId((comment: Comment) => comment.user)
+    userEmail!: string;
 
     @ManyToOne(type => User)
-    @JoinColumn({ name: 'user_id' })
+    @JoinColumn({ name: 'user_email' })
     user!: User;
 
-    @RelationId((post: Post) => post.idx)
+    @RelationId((comment: Comment) => comment.post)
     postIdx!: number;
 
     @ManyToOne(type => Post)

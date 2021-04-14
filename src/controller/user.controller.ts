@@ -24,12 +24,12 @@ export default class UserController {
     }
 
     signUp = async(req: Request, res: Response) => {
-        const signupRequest = new SignUpDTO(req.body);
+        const signupRequest: SignUpDTO = new SignUpDTO(req.body);
         await signupRequest.validate();
 
         try {
-            const newUser = await this.userService.signUp(signupRequest);
-            successHandler(res, 200, '회원가입 성공', newUser);
+            await this.userService.signUp(signupRequest);
+            successHandler(res, 200, '회원가입 성공');
         } catch (err) {
             ErrorHandler(res, err);
         }

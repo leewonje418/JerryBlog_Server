@@ -4,7 +4,7 @@ import { auth } from '../../lib/middleware/auth.middleware';
 
 const router: Router = Router();
 
-const postController = new PostController();
+const postController: PostController = new PostController();
 
 router.get('/', postController.getPosts);
 router.post('/', auth, postController.create);
