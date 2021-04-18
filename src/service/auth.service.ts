@@ -27,9 +27,18 @@ export default class AuthService {
         return token;
     }
 
-    user = async (email: string): Promise<User> => {
+    getUsers = async (email: string): Promise<User[]> => {
         const userRepository: UserRepository = getCustomRepository(UserRepository);
-        const user: User | undefined = await userRepository.findUsers(email);
+        const user: User[] | undefined = await userRepository.findUsers(email);
+        if(user === undefined) {
+            throw new HttpError(401, '유저가 존재하지 않습니다.');
+        }
+        return user;
+    }
+
+    getUser = async (email: string): Promise<User> => {
+        const userRepository: UserRepository = getCustomRepository(UserRepository);
+        const user: User | undefined = await userRepository.findUser(email);
         if(user === undefined) {
             throw new HttpError(401, '유저가 존재하지 않습니다.');
         }
