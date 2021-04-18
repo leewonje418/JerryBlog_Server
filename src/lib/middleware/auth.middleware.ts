@@ -5,7 +5,7 @@ import AuthService from "../../service/auth.service";
 import httpErrorHandler from "../handler/httpErrorHandler";
 import { verifyToken } from "../token";
 
-export const auth = async (req: Request, res: Response, next: NextFunction) => {
+export const authHost = async (req: Request, res: Response, next: NextFunction) => {
     const email: string = await validateToken(req, res) as string;
     const authService: AuthService = new AuthService();
 
@@ -16,6 +16,19 @@ export const auth = async (req: Request, res: Response, next: NextFunction) => {
     
     req.hostEmail = email;
     next();
+}
+
+export const authUser = async (req: Request, res: Response, next: NextFunction) => {
+  const email: string = await validateToken(req, res) as string;
+  const authService: AuthService = new AuthService();
+
+  const user: User = await authService.getUser(email);
+  if (user === undefined) {
+    throw new HttpError(403, '권한 없음');
+  }
+  
+  req.userEmail = email;
+  next();
 }
 
 const validateToken = async (req: Request, res: Response): Promise<string | undefined> => {
