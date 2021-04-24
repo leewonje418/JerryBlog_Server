@@ -20,7 +20,7 @@ export default class PostService {
         post.content = content;
         post.image = image;
 
-        const newPost = await postRepository.save(post)
+        const newPost = await postRepository.save(post);
         
         return newPost;
     }

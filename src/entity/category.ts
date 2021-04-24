@@ -1,6 +1,4 @@
-import { Column, Entity, PrimaryColumn, RelationId, ManyToOne, JoinColumn, PrimaryGeneratedColumn } from 'typeorm';
-import Post from './post';
-import User from './user';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('category')
 export default class Category {

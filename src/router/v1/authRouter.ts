@@ -7,5 +7,6 @@ const authController: AuthController = new AuthController();
 
 router.post('/login', authController.login);
 router.post('/logout', authController.logout);
+router.post('/emailDuplicate', authController.emailDuplicate);
 
 export default router;
