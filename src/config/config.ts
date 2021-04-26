@@ -28,3 +28,9 @@ export const JWT_SECRET = getProcessEnv('JWT_SECRET');
 
 // 포트번호
 export const PORT = getProcessEnv('PORT');
+
+//호스트 이메일
+export const HOST_EMAIL = getProcessEnv('HOST_EMAIL');
+
+//호스트 비밀번호
+export const HOST_PW = getProcessEnv('HOST_PW');
