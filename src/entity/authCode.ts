@@ -9,5 +9,9 @@ export default class AuthCode {
         type: 'varchar'
     })
     code!: string;
-    createQueryBuilder: any;
+
+    @Column({
+        type: 'boolean'
+    })
+    check: boolean = false;
 }
