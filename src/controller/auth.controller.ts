@@ -63,7 +63,9 @@ export default class AuthController {
     checkEmailCode = async (req: Request, res: Response)=> {
         try {
             const { email, code } = req.body;
+            
             await this.authService.checkEmailCode(email, code);
+
             successHandler(res, 200, '이메일 인증 성공');
         } catch (err) {
             ErrorHandler(res, err);
