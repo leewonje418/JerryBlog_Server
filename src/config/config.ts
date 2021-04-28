@@ -14,7 +14,14 @@ const getProcessEnv = (name: string): string => {
 };
 
 // MySQL
-export const MYSQL = {
+export const MYSQL: {
+  USERNAME: string;
+  PASSWORD: string;
+  DATABASE: string;
+  HOST: string;
+  PORT: number;
+  SYNC: boolean;
+} = {
   USERNAME: getProcessEnv('MYSQL_USERNAME'),
   PASSWORD: getProcessEnv('MYSQL_PASSWORD'),
   DATABASE: getProcessEnv('MYSQL_DATABASE'),
@@ -24,13 +31,13 @@ export const MYSQL = {
 };
 
 // jwt 시크릿 키
-export const JWT_SECRET = getProcessEnv('JWT_SECRET');
+export const JWT_SECRET: string = getProcessEnv('JWT_SECRET');
 
 // 포트번호
-export const PORT = getProcessEnv('PORT');
+export const PORT: string = getProcessEnv('PORT');
 
 //호스트 이메일
-export const HOST_EMAIL = getProcessEnv('HOST_EMAIL');
+export const HOST_EMAIL: string = getProcessEnv('HOST_EMAIL');
 
 //호스트 비밀번호
-export const HOST_PW = getProcessEnv('HOST_PW');
+export const HOST_PW: string = getProcessEnv('HOST_PW');
