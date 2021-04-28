@@ -4,7 +4,7 @@ import * as database from './orm';
 import { PORT } from './config/config';
 import logger from './lib/logger';
 
-const server = http.createServer(app);
+const server: http.Server = http.createServer(app);
 
 database.getConnection();
 
