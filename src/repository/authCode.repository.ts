@@ -16,4 +16,12 @@ export default class AuthCodeRepository extends Repository<AuthCode>{
             },
         });
     }
+    findByEmailAndCheck = async (email: string): Promise<AuthCode | undefined> => {
+        return this.findOne({
+            where: {
+                email,
+                check: true,
+            },
+        });
+    }
 }
