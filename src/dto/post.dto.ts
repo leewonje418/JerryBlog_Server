@@ -3,14 +3,14 @@ import HttpError from '../error/httpError';
 
 export default class PostDTO {
   @Length(1, 50)
-  readonly title: string;
+  readonly title!: string;
 
   @Length(1, 500)
-  readonly content: string;
+  readonly content!: string;
 
   readonly image?: string;
 
-  readonly creator: string;
+  readonly creator!: string;
 
   constructor(body: PostDTO) {
     this.title = body.title;

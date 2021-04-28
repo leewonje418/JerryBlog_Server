@@ -3,13 +3,13 @@ import HttpError from '../error/httpError';
 
 export default class SignUpDTO {
   @Length(2, 100)
-  readonly name: string;
+  readonly name!: string;
 
   @Length(2, 100)
-  readonly email: string;
+  readonly email!: string;
 
   @Length(2, 100)
-  readonly pw: string;
+  readonly pw!: string;
   
   constructor(body: SignUpDTO) {
     this.name = body.name;

@@ -3,8 +3,8 @@ import HttpError from '../error/httpError';
 
 export default class LoginDTO {
   @Length(2, 100)
-  readonly email: string;
-  readonly pw: string;
+  readonly email!: string;
+  readonly pw!: string;
 
   constructor(body: LoginDTO) {
     this.email = body.email;
