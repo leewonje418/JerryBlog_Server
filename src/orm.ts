@@ -23,7 +23,7 @@ import {
     };
   
     try {
-      const connection = createConnection(connectionOptions);
+      const connection: Promise<Connection> = createConnection(connectionOptions);
       logger.success('[DB] connected');
       return connection;
     } catch (err) {
