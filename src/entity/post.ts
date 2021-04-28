@@ -14,13 +14,6 @@ export default class Post {
     @JoinColumn({ name: 'user_email' })
     user!: User;
 
-    // @RelationId((post: Post) => post.category)
-    // categoryIdx!: string;
-
-    // @ManyToOne(type => Category)
-    // @JoinColumn({ name: 'category_id' })
-    // category!: Category;
-
     @Column({
         type: 'varchar'
     })
