@@ -81,7 +81,7 @@ export default class AuthService {
         authCode.email = email;
         authCode.code = code;
 
-        const newCode = await authCodeRepository.save(authCode);
+        const newCode: AuthCode = await authCodeRepository.save(authCode);
 
         return newCode;
     }
@@ -94,9 +94,18 @@ export default class AuthService {
     checkEmailCode = async (email: string, code: string): Promise<AuthCode | undefined> => {
         const authCodeRepository: AuthCodeRepository = getCustomRepository(AuthCodeRepository);
         const emailCode: AuthCode | undefined = await authCodeRepository.findByEmailAndCode(email, code);
+        
         if(emailCode === undefined) {
             throw new HttpError(401, '이메일 코드가 잘못되었습니다.');
         }
+
+        const checkAuthCode: AuthCode = new AuthCode();
+        checkAuthCode.email = email;
+        checkAuthCode.code = code;
+        checkAuthCode.check = true;
+
+        await authCodeRepository.save(checkAuthCode);
+
         return emailCode; 
     }
 }
