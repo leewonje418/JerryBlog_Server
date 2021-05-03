@@ -26,12 +26,40 @@ export default class PostController {
     create = async(req: Request, res: Response) => {
         try {
             const { body, hostEmail } = req;
-
             const postRequest: PostDTO = new PostDTO(body);
+
             await postRequest.validate();
             await this.postService.create(hostEmail, postRequest);
             
             successHandler(res, 200, '게시글 게시 성공');
+        } catch (err) {
+            ErrorHandler(res, err);
+        }
+    }
+
+    update = async(req: Request, res: Response) => {
+        try {
+            // post_id
+            const id: number = Number(req.params.idx);
+            const { body } = req;
+            const postRequest: PostDTO = new PostDTO(body);
+
+            await postRequest.validate();
+            await this.postService.update(id, postRequest);
+
+            successHandler(res, 200, '게시글 수정 성공');
+        } catch (err) {
+            ErrorHandler(res, err);
+        }
+    }
+
+    delete = async(req: Request, res: Response) => {
+        try {
+            // post_id
+            const id: number = Number(req.params.idx);
+            await this.postService.delete(id);
+
+            successHandler(res, 200, '게시글 삭제 성공');
         } catch (err) {
             ErrorHandler(res, err);
         }
