@@ -29,15 +29,6 @@ export default class AuthService {
         return token;
     }
 
-    getUsers = async (email: string): Promise<User[]> => {
-        const userRepository: UserRepository = getCustomRepository(UserRepository);
-        const user: User[] | undefined = await userRepository.findUsers(email);
-        if(user === undefined) {
-            throw new HttpError(401, '유저가 존재하지 않습니다.');
-        }
-        return user;
-    }
-
     getUser = async (email: string): Promise<User> => {
         const userRepository: UserRepository = getCustomRepository(UserRepository);
         const user: User | undefined = await userRepository.findUser(email);
@@ -88,7 +79,7 @@ export default class AuthService {
 
     deleteEmailCode = async(email: string) => {
         const authCodeRepository: AuthCodeRepository = getCustomRepository(AuthCodeRepository);
-        await authCodeRepository.deleteCode(email);
+        await authCodeRepository.delete(email);
     }
 
     checkEmailCode = async (email: string, code: string): Promise<AuthCode | undefined> => {
