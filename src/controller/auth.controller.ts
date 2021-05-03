@@ -35,6 +35,7 @@ export default class AuthController {
         try {
             const { email } = req.body;
             const findEmail = await this.authService.emailCheck(email);
+            
             if(findEmail === undefined) {
                 successHandler(res, 200, '이메일 중복 확인 성공');
             }
@@ -46,7 +47,6 @@ export default class AuthController {
     sendEmail = async (req: Request, res: Response)=> {
         try {
             const { email } = req.body;
-
             await this.authService.deleteEmailCode(email);
 
             const code: string = emailCode();
@@ -63,7 +63,6 @@ export default class AuthController {
     checkEmailCode = async (req: Request, res: Response)=> {
         try {
             const { email, code } = req.body;
-            
             await this.authService.checkEmailCode(email, code);
 
             successHandler(res, 200, '이메일 인증 성공');
