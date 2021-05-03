@@ -24,12 +24,35 @@ export default class UserController {
     }
 
     signUp = async(req: Request, res: Response) => {
-        const signupRequest: SignUpDTO = new SignUpDTO(req.body);
-        await signupRequest.validate();
-
         try {
+            const signupRequest: SignUpDTO = new SignUpDTO(req.body);
+            await signupRequest.validate();
+            
             await this.userService.signUp(signupRequest);
             successHandler(res, 200, '회원가입 성공');
+        } catch (err) {
+            ErrorHandler(res, err);
+        }
+    }
+
+    updateName = async(req: Request, res: Response) => {
+        try {
+            const { userEmail } = req;
+            const { name } = req.body;
+            
+            await this.userService.updateName(userEmail, name);
+
+            successHandler(res, 200, '이름수정 성공');
+        } catch (err) {
+            ErrorHandler(res, err);
+        }
+    }
+
+    delete = async(req: Request, res: Response) => {
+        try {
+            const { userEmail } = req;
+            await this.userService.delete(userEmail);
+            successHandler(res, 200, '계정삭제 성공');
         } catch (err) {
             ErrorHandler(res, err);
         }
