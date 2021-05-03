@@ -4,7 +4,7 @@ import SignUpDTO from '../dto/signup.dto';
 import Bcrypt from '../lib/bcrypt/bcrypt';
 import { checkRegularExpession } from '../lib/checkRegularExpession';
 import UserRepository from '../repository/user.repository';
-import { getCustomRepository } from 'typeorm';
+import { DeleteResult, getCustomRepository } from 'typeorm';
 import Role from '../enum/Role';
 import AuthCodeRepository from 'src/repository/authCode.repository';
 import AuthCode from 'src/entity/authCode';
@@ -47,5 +47,22 @@ export default class UserService {
         const newUser: User = await userRepository.save(user)
 
         return newUser;
+    }
+
+    updateName = async (email: string, name: string): Promise<User | undefined> => {
+        const userRepository: UserRepository = getCustomRepository(UserRepository);
+
+        const user: User = new User();
+		user.email = email;
+        user.name = name;
+
+        const updateUser: User = await userRepository.save(user)
+
+        return updateUser;
+    }
+    
+    delete = async (email: string) => {
+        const userRepository: UserRepository = getCustomRepository(UserRepository);
+        await userRepository.delete(email);
     }
 }
