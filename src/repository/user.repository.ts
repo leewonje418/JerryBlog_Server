@@ -1,4 +1,4 @@
-import { EntityRepository, Repository } from 'typeorm';
+import { DeleteQueryBuilder, EntityRepository, Repository } from 'typeorm';
 import User from '../entity/user';
 import Role from '../enum/Role'
 
