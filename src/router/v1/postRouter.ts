@@ -7,7 +7,8 @@ const router: Router = Router();
 const postController: PostController = new PostController();
 
 router.get('/getPosts', postController.getPosts);
-router.post('/create', authHost, postController.create);
+router.get('/', postController.getPost);
+router.post('/', authHost, postController.create);
 router.put('/update', authHost, postController.update);
 router.delete('/delete', authHost, postController.delete);
 
