@@ -5,7 +5,7 @@ export default class PostDTO {
   @Length(1, 50)
   readonly title!: string;
 
-  @Length(1, 500)
+  @Length(1, 2000)
   readonly content!: string;
 
   readonly image?: string;
