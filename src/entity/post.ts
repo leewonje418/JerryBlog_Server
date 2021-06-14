@@ -1,5 +1,4 @@
 import { Column, Entity, RelationId, ManyToOne, JoinColumn, PrimaryGeneratedColumn } from 'typeorm';
-import Category from './category';
 import User from './user';
 
 @Entity('post')
