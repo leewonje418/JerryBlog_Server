@@ -6,6 +6,6 @@ const router: Router = Router();
 
 const searchController: SearchController = new SearchController();
 
-router.post('/', searchController.search);
+router.get('/', searchController.search);
 
 export default router;

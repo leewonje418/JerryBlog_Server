@@ -14,7 +14,7 @@ export default class PostController {
 
     search = async(req: Request, res: Response) => {
         try {
-            const { keyword } = req.body;
+            const keyword: string = String(req.query.keyword);
             const searchPosts: Post[] | undefined = await this.searchService.search(keyword);
             successHandler(res, 200, '검색된 게시글 전채 불러오기 성공', searchPosts);
         } catch (err) {
