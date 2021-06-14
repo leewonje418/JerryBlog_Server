@@ -7,9 +7,9 @@ const router: Router = Router();
 const commentController: CommentController = new CommentController();
 
 router.get('/getComments', commentController.getComments);
-router.get('/', commentController.getComment);
+router.get('/:id', commentController.getComment);
 router.post('/', authUser, commentController.create);
-router.put('/update', authUser, commentController.update);
+router.put('/update/:id', authUser, commentController.update);
 router.delete('/delete', authUser, commentController.delete);
 
 export default router;

@@ -25,8 +25,9 @@ export default class PostController {
 
     getPost = async(req: Request, res: Response) => {
         try {
-            const id: number = Number(req.params.id);
-            const post: Post | undefined = await this.postService.getPost(id);
+            const idx: number = Number(req.params.id);
+            console.log(idx);
+            const post: Post | undefined = await this.postService.getPost(idx);
             successHandler(res, 200, '게시글 전채 불러오기 성공', post);
         } catch (err) {
             ErrorHandler(res, err);
@@ -36,10 +37,11 @@ export default class PostController {
     create = async(req: Request, res: Response) => {
         try {
             const { body } = req;
+            const { userEmail } = req;
             const postRequest: PostDTO = new PostDTO(body);
 
             await postRequest.validate();
-            await this.postService.create(postRequest);
+            await this.postService.create(userEmail, postRequest);
             
             successHandler(res, 200, '게시글 게시 성공');
         } catch (err) {
@@ -50,12 +52,12 @@ export default class PostController {
     update = async(req: Request, res: Response) => {
         try {
             // post_id
-            const id: number = Number(req.params.id);
+            const idx: number = Number(req.params.idx);
             const { body } = req;
             const postRequest: PostDTO = new PostDTO(body);
 
             await postRequest.validate();
-            await this.postService.update(id, postRequest);
+            await this.postService.update(idx, postRequest);
 
             successHandler(res, 200, '게시글 수정 성공');
         } catch (err) {
@@ -66,8 +68,8 @@ export default class PostController {
     delete = async(req: Request, res: Response) => {
         try {
             // post_id
-            const id: number = Number(req.params.id);
-            await this.postService.delete(id);
+            const idx: number = Number(req.query.idx);
+            await this.postService.delete(idx);
 
             successHandler(res, 200, '게시글 삭제 성공');
         } catch (err) {

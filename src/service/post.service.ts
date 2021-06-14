@@ -10,19 +10,19 @@ export default class PostService {
         return posts;
     }
 
-    getPost = async (id: number): Promise<Post | undefined> => {
+    getPost = async (idx: number): Promise<Post | undefined> => {
         const postRepository: PostRepository = getCustomRepository(PostRepository);
-        const post: Post | undefined = await postRepository.findOne(id);
+        const post: Post | undefined = await postRepository.findOne(idx);
 
         return post;
     }
 
-    create = async (postRequest: PostDTO): Promise<Post> => {
+    create = async (userEmail: string, postRequest: PostDTO): Promise<Post> => {
         const postRepository: PostRepository = getCustomRepository(PostRepository);
         const { title, content, image, creator } = postRequest;
 
         const post: Post = new Post();
-        post.userEmail = creator;
+        post.userEmail = userEmail;
 		post.title = title;
         post.content = content;
         post.image = image;
@@ -47,8 +47,8 @@ export default class PostService {
         return newPost;
     }
 
-    delete = async (id: number) => {
+    delete = async (idx: number) => {
         const postRepository: PostRepository = getCustomRepository(PostRepository);
-        await postRepository.delete(id);
+        await postRepository.delete(idx);
     }
 }

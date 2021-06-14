@@ -16,7 +16,7 @@ export default class CommentController {
 
     getComments = async(req: Request, res: Response) => {
         try {
-            const comments: Comment[] = await this.commentService.getPosts();
+            const comments: Comment[] = await this.commentService.getComments();
             successHandler(res, 200, '덧글 전체 불러오기 성공', comments);
         } catch (err) {
             ErrorHandler(res, err);
@@ -25,8 +25,8 @@ export default class CommentController {
 
     getComment = async(req: Request, res: Response) => {
         try {
-            const id: number = Number(req.params.id);
-            const comment: Comment | undefined = await this.commentService.getPost(id);
+            const idx: number = Number(req.params.id);
+            const comment: Comment | undefined = await this.commentService.getComment(idx);
             successHandler(res, 200, '게시글 불러오기 성공', comment);
         } catch (err) {
             ErrorHandler(res, err);
@@ -50,12 +50,12 @@ export default class CommentController {
     update = async(req: Request, res: Response) => {
         try {
             // post_id
-            const id: number = Number(req.params.id);
+            const idx: number = Number(req.params.id);
             const { body } = req;
             const postRequest: CommentDTO = new CommentDTO(body);
 
             await postRequest.validate();
-            await this.commentService.update(id, postRequest);
+            await this.commentService.update(idx, postRequest);
 
             successHandler(res, 200, '덧글 수정 성공');
         } catch (err) {
@@ -66,8 +66,8 @@ export default class CommentController {
     delete = async(req: Request, res: Response) => {
         try {
             // post_id
-            const id: number = Number(req.params.id);
-            await this.commentService.delete(id);
+            const idx: number = Number(req.query.id);
+            await this.commentService.delete(idx);
 
             successHandler(res, 200, '덧글 삭제 성공');
         } catch (err) {

@@ -5,7 +5,7 @@ import Post from '../entity/post';
 export default class PostRepository extends Repository<Post> {
     findByTitle = async (keyword: string): Promise<Post[]> => {
         return this.createQueryBuilder('post')
-            .where('title ILIKE :searchKeyword', {searchKeyword: keyword})
+            .where('post.title like :searchKeyword', {searchKeyword: `%${keyword}%`})
             .getMany();
     }
 }

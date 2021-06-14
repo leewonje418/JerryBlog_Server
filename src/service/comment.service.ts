@@ -4,16 +4,15 @@ import CommentRepository from '../repository/comment.repository';
 import { getCustomRepository } from 'typeorm';
 
 export default class CommentService {
-    getPosts = async (): Promise<Comment[]> => {
+    getComments = async (): Promise<Comment[]> => {
         const commentRepository: CommentRepository = getCustomRepository(CommentRepository);
         const comments: Comment[] = await commentRepository.find();
         return comments;
     }
 
-    getPost = async (id: number): Promise<Comment | undefined> => {
+    getComment = async (idx: number): Promise<Comment | undefined> => {
         const commentRepository: CommentRepository = getCustomRepository(CommentRepository);
-        const comment: Comment | undefined = await commentRepository.findOne(id);
-        
+        const comment: Comment | undefined = await commentRepository.findOne(idx);       
         return comment;
     }
 
@@ -46,8 +45,8 @@ export default class CommentService {
         return updateComment;
     }
 
-    delete = async (id: number) => {
+    delete = async (idx: number) => {
         const commentRepository: CommentRepository = getCustomRepository(CommentRepository);
-        await commentRepository.delete(id);
+        await commentRepository.delete(idx);
     }
 }
