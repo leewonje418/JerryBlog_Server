@@ -29,12 +29,10 @@ export default class AuthService {
         return token;
     }
 
-    getUser = async (email: string): Promise<User> => {
+    getUser = async (email: string): Promise<User | undefined> => {
         const userRepository: UserRepository = getCustomRepository(UserRepository);
         const user: User | undefined = await userRepository.findUser(email);
-        if(user === undefined) {
-            throw new HttpError(401, '유저가 존재하지 않습니다.');
-        }
+
         return user;
     }
 
@@ -47,12 +45,10 @@ export default class AuthService {
         return user;
     }
 
-    getHost = async (email: string): Promise<User> => {
+    getHost = async (email: string): Promise<User | undefined> => {
         const userRepository: UserRepository = getCustomRepository(UserRepository);
         const host: User | undefined = await userRepository.findByEmailAndRole(email);
-        if(host === undefined) {
-            throw new HttpError(401, '호스트가 존재하지 않습니다.');
-        }
+
         return host;
     }
 
