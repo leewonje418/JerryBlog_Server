@@ -9,9 +9,12 @@ export const authHost = async (req: Request, res: Response, next: NextFunction) 
     const email: string = await validateToken(req, res) as string;
     const authService: AuthService = new AuthService();
 
-    const host: User = await authService.getHost(email);
+    const host: User | undefined = await authService.getHost(email);
     if (host === undefined) {
-      throw new HttpError(403, '권한 없음');
+      res.status(403).json({
+        message: '관리자 없음',
+      });
+      return;
     }
     
     req.hostEmail = email;
@@ -22,9 +25,12 @@ export const authUser = async (req: Request, res: Response, next: NextFunction) 
   const email: string = await validateToken(req, res) as string;
   const authService: AuthService = new AuthService();
 
-  const user: User = await authService.getUser(email);
+  const user: User | undefined = await authService.getUser(email);
   if (user === undefined) {
-    throw new HttpError(403, '권한 없음');
+    res.status(403).json({
+      message: '유저 없음',
+    });
+    return;
   }
   
   req.userEmail = email;
