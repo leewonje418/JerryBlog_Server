@@ -10,13 +10,13 @@ export default class PostDTO {
 
   readonly image?: string;
 
-  readonly creator!: string;
+  readonly userEmail!: string;
 
   constructor(body: PostDTO) {
     this.title = body.title;
     this.content = body.content;
     this.image = body.image;
-    this.creator = body.creator;
+    this.userEmail = body.userEmail;
   }
 
   async validate(): Promise<void> {
