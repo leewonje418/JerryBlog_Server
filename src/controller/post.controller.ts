@@ -26,7 +26,6 @@ export default class PostController {
     getPost = async(req: Request, res: Response) => {
         try {
             const idx: number = Number(req.params.id);
-            console.log(idx);
             const post: Post | undefined = await this.postService.getPost(idx);
             successHandler(res, 200, '게시글 전채 불러오기 성공', post);
         } catch (err) {
@@ -37,11 +36,10 @@ export default class PostController {
     create = async(req: Request, res: Response) => {
         try {
             const { body } = req;
-            const { userEmail } = req;
             const postRequest: PostDTO = new PostDTO(body);
 
             await postRequest.validate();
-            await this.postService.create(userEmail, postRequest);
+            await this.postService.create(postRequest);
             
             successHandler(res, 200, '게시글 게시 성공');
         } catch (err) {
