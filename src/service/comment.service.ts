@@ -65,6 +65,10 @@ export default class CommentService {
             throw new HttpError(404, '게시글 없음');
         }
 
+        if(user.email !== post.userEmail) {
+            throw new HttpError(403, '덧글을 수정할 권한이 없습니다.')
+        }
+
         const comment: Comment = new Comment();
         comment.idx = id;
         comment.content = content;
